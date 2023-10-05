@@ -24,6 +24,14 @@ const Cartitems = ({item}) => {
             <IoMdClose className='text-gray-500 hover:text-red-500 transition' />
           </div>
         </div>
+        <div className='bg-stone-400 flex gap-x-2 h-[36px] text-sm'>
+          {/* qty */}
+          <div>quantity</div>
+          {/* price */}
+          <div>item price</div>
+          {/* final price */}
+          <div>final price</div>
+        </div>
       </div>
     </div>
   </div>
