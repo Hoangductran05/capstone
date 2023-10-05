@@ -1,10 +1,14 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, {useContext, useState, useEffect, createContext} from 'react'
 
-const CartContext = () => {
-  return (
-    <div>CartContext</div>
-  )
+export const Cartcontext = createContext()
+
+const CartProvider = ({children}) => {
+  const [cart, setCart] = useState([])
+
+  return <Cartcontext.Provider value={'this is the cart context'}>
+    {children}</Cartcontext.Provider>
 }
 
-export default CartContext
+export default CartProvider

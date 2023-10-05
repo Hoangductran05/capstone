@@ -4,13 +4,16 @@ import App from './App.jsx'
 import './index.css'
 import ProductProvider from './contexts/productContext.jsx'
 import SidebarProvider from './contexts/sidebarContext.jsx'
+import CartProvider from './contexts/cartContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <SidebarProvider>
-  <ProductProvider>
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-  </ProductProvider>
+    <CartProvider>
+      <ProductProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </ProductProvider>
+    </CartProvider>
   </SidebarProvider>
 )
