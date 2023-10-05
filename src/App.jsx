@@ -21,7 +21,17 @@ function App() {
   return (
     <>
       <div className='overflow-hidden'>
-        Ecommerce store
+        <Router>
+          <Header />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/product/:id' element={<Detail />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/login' element={<Login />} />
+          </Routes>
+          <Sidebar />
+          <Footer />
+        </Router>
       </div>
     </>
   )
