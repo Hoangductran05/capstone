@@ -7,7 +7,9 @@ function App() {
 
   return (
     <>
-
+      <div className='overflow-hidden'>
+        Ecommerce store
+      </div>
     </>
   )
 }
