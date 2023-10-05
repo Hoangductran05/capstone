@@ -28,7 +28,14 @@ const Products = ({product}) => {
           className='w-12 h-12 bg-white flex justify-center items-center text-primary drop-shadow-xl'><BsEyeFill/></Link>
         </div>
       </div>
-      <div>2</div>
+      {/* category */}
+      <div>
+        <div className='text-sm capitalize text-gray-500 mb-1'>{category}</div>
+        <Link to={`/product/${id}`}>
+        <h2 className='font-semibold mb-1'>{title}</h2>
+        </Link>
+        <div className='font-semibold'>$ {price}</div>
+      </div>
     </div>
   )
 }
