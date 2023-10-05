@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 
-const Cartitems = () => {
+const Sidebar = () => {
   return (
-    <div>Cartitems</div>
+    <div>Sidebar</div>
   )
 }
 
-export default Cartitems
+export default Sidebar
