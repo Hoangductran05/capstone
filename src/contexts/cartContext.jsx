@@ -1,12 +1,21 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, {useContext, useState, useEffect, createContext} from 'react'
+import { useFetcher } from 'react-router-dom'
 
 export const Cartcontext = createContext()
 
 const CartProvider = ({children}) => {
   const [cart, setCart] = useState([])
   const [itemAmount, setItemAmount] = useState(0)
+  const [total, setTotal] = useState(0)
+
+  useEffect(() => {
+    const total = cart.reduce((accumulator, currentItem) => {
+      return accumulator + currentItem.price * currentItem.amount
+    }, 0)
+    setTotal(total)
+  })
 
   //update item amount
   useEffect(() => {
@@ -79,7 +88,7 @@ const CartProvider = ({children}) => {
     
   }
 
-  return <Cartcontext.Provider value={{cart, addToCart, removeFromCart, clearCart,  increaseAmount, decreaseAmount, itemAmount,}}>
+  return <Cartcontext.Provider value={{cart, addToCart, removeFromCart, clearCart,  increaseAmount, decreaseAmount, itemAmount,total, }}>
     {children}</Cartcontext.Provider>
 }
 
