@@ -22,7 +22,7 @@ const Header = () => {
       {/* logo */}
       <Link to={'/'}>
         <div>
-          <img className='w-[50px]' src={Logo} alt="" />
+          <img className='w-[40px]' src={Logo} alt="" />
         </div>
       </Link>
       {/* cart */}
