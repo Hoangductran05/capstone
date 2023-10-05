@@ -7,6 +7,17 @@ export const Cartcontext = createContext()
 const CartProvider = ({children}) => {
   const [cart, setCart] = useState([])
   const [itemAmount, setItemAmount] = useState(0)
+
+  //update item amount
+  useEffect(() => {
+    if (cart) {
+      const amount = cart.reduce((accumulator, currentItem) => {
+        return accumulator + currentItem.amount
+      }, 0)
+      setItemAmount(amount)
+    }
+  }, [cart])
+
   const addToCart = (product, id) => {
     const newItem = {...product, amount: 1}
     // check if the item is already in the cart
