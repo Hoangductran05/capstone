@@ -1,10 +1,24 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, {createContext, useEffect, useState} from 'react'
 
-const ProductContext = () => {
-  return (
-    <div>ProductContext</div>
-  )
+
+export const ProductContext = createContext()
+
+// eslint-disable-next-line react/prop-types
+const ProductProvider = ({ children }) => {
+
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const response = await fetch('https://fakestoreapi.com/products')
+            const data = await response.json()
+            console.log(data)
+        }
+        fetchProducts()
+    }, [])
+
+
+  return <ProductContext.Provider>{children}</ProductContext.Provider>
 }
 
-export default ProductContext
+export default ProductProvider
