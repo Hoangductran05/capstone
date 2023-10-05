@@ -25,6 +25,7 @@ const Sidebar = () => {
       <div>{cart.map((item) => {
         return <Cartitems item={item} key={item.id} />
       })}</div>
+      <div>sidebarbottom</div>
     </div>
   )
 }
