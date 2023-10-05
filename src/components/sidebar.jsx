@@ -11,7 +11,7 @@ import { Cartcontext } from '../contexts/cartContext'
 
 const Sidebar = () => {
   const {isOpen, handleClose} = useContext(SidebarContext)
-  const {cart, clearCart, total} = useContext(Cartcontext)
+  const {cart, clearCart, total, itemAmount} = useContext(Cartcontext)
   
   return (
     <div className={`${isOpen ? 'right-0' : '-right-full'} 
