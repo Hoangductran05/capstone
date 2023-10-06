@@ -19,11 +19,11 @@ const Header = ({setToken}) => {
 
   const handleLogout = () => {
     // Clear user information from localStorage
-    localStorage.removeItem('user');
+    localStorage.removeItem('userToken');
     setToken('')
     // Set isLoggedIn to false
     // setIsLoggedIn(false);
-
+    console.log('loggedout')
     // // Redirect to the login page after logout
     // navigate('/login');
   }
