@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useNavigate } from 'react'
 import { SidebarContext } from '../contexts/sidebarContext'
 import { Cartcontext } from '../contexts/cartContext'
 import {BsBag} from 'react-icons/bs'
@@ -9,10 +10,23 @@ import Login from '../pages/login'
 import { FaUserAlt } from 'react-icons/fa'
 
 
-const Header = () => {
+const Header = ({setToken}) => {
   const [isActive, setIsActive] = useState(false)
   const {isOpen, setIsOpen} = useContext(SidebarContext)
   const {itemAmount} = useContext(Cartcontext)
+ 
+  
+
+  const handleLogout = () => {
+    // Clear user information from localStorage
+    localStorage.removeItem('user');
+    setToken('')
+    // Set isLoggedIn to false
+    // setIsLoggedIn(false);
+
+    // // Redirect to the login page after logout
+    // navigate('/login');
+  }
 
   useEffect(() => {
     window.addEventListener('scroll', ()=> {
@@ -29,10 +43,20 @@ const Header = () => {
         </div>
       </Link>
 
+
+
       {/* login register */}
       <Link to={'/login'}>
       <div className='cursor-pointer flex relative hover:text-stone-600'><FaUserAlt className=' text-2xl'/></div>
       </Link>
+
+      {/* logout */}
+      <div>
+          <button
+          className=' w-[80px] mb-4 text-[18px] mt-6 rounded-md   bg-neutral-400 text-neutral-600 hover:bg-neutral-200 hover:text-stone-700 py-2 font-bold'
+          onClick={handleLogout}>Logout</button>
+        </div>
+      
 
       {/* cart */}
       <div onClick={() => setIsOpen(!isOpen)} className='cursor-pointer flex relative hover:text-stone-600'>

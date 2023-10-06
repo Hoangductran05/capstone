@@ -23,7 +23,7 @@ function App() {
     <>
       <div className='overflow-hidden'>
         <Router>
-          <Header />
+          <Header setToken={setToken} />
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/product/:id' element={<Detail />} />

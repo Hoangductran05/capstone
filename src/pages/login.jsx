@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
@@ -10,7 +11,7 @@ const Login = ({token, setToken}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -26,7 +27,7 @@ const Login = ({token, setToken}) => {
       // save user info
       localStorage.setItem('userToken', response.data.token)
       // update login state
-      setIsLoggedIn(true)
+      
       // redirect to the homepage
       // navigate('/');
 
@@ -39,23 +40,10 @@ const Login = ({token, setToken}) => {
    
     }
 
-    const handleLogout = () => {
-      localStorage.removeItem('userToken')
-      // update login state
-      setIsLoggedIn(false)
-      // redirect to login page
-      navigate('/login')
-    }
+
   
   return (
     <div className=' text-stone-500 h-[100vh] flex justify-center items-center'>
-      { isLoggedIn ? (
-        <div>
-          <button 
-          className='w-full mb-4 text-[18px] mt-6 rounded-full bg-neutral-400 text-neutral-600 hover:bg-neutral-200 hover:text-stone-700 py-2'
-          onClick={handleLogout}>Logout</button>
-        </div>
-      ) : (
       <div className=' bg-stone-800 border border-stone-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-20 relative '>
         <h1 className='text-4x1 text-stone-600 font-bold text-center mb-6'>Login</h1>
         <form  onSubmit={handleSubmit}>
@@ -103,7 +91,7 @@ const Login = ({token, setToken}) => {
         </form>
         
       </div>
-      )}
+    
     </div>
   )
 }
