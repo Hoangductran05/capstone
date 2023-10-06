@@ -1,42 +1,64 @@
+/* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import axios from 'axios'
 
-const Login = () => {
+
+const Login = ({token, setToken}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-      // TODO: Send signup request to server
-      try {
-        const response = await fetch('https://fakestoreapi.com/auth/login', {
-          method:'POST',
-          body:JSON.stringify({
-              username: "mor_2314",
-              password: "83r5^_",
-          })
+    try {
+      const response = await axios.post('https://fakestoreapi.com/auth/login', {
+        username,
+        password,
       })
-      const result  = await response.json()
-      console.log(result)
-          
-      } catch (error) {
-        setError(error.message);
-      }
+      console.log(response.data)
+      setToken(response.data.token)
 
-      
-      // setUsername('');
-      // setPassword('');
+      // save user info
+      localStorage.setItem('userToken', response.data.token)
+      // update login state
+      setIsLoggedIn(true)
+      // redirect to the homepage
+      // navigate('/');
+
+    } catch (error) {
+      console.error(error)
+      setError(error.response.data)
+    }
+    // setUsername('')
+    // setPassword('')
+   
+    }
+
+    const handleLogout = () => {
+      localStorage.removeItem('userToken')
+      // update login state
+      setIsLoggedIn(false)
+      // redirect to login page
+      navigate('/login')
     }
   
   return (
     <div className=' text-stone-500 h-[100vh] flex justify-center items-center'>
+      { isLoggedIn ? (
+        <div>
+          <button 
+          className='w-full mb-4 text-[18px] mt-6 rounded-full bg-neutral-400 text-neutral-600 hover:bg-neutral-200 hover:text-stone-700 py-2'
+          onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
       <div className=' bg-stone-800 border border-stone-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-20 relative '>
         <h1 className='text-4x1 text-stone-600 font-bold text-center mb-6'>Login</h1>
-        <form action="" onSubmit={handleSubmit}>
+        <form  onSubmit={handleSubmit}>
         
         {/* username */}
         <div className=' relative my-4' >
@@ -81,6 +103,7 @@ const Login = () => {
         </form>
         
       </div>
+      )}
     </div>
   )
 }
