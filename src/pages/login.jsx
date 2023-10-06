@@ -2,10 +2,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
-
+import axios from 'axios'
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -28,7 +28,7 @@ const Login = () => {
       }
 
       
-      // setEmail('');
+      // setUsername('');
       // setPassword('');
     }
   
@@ -38,18 +38,18 @@ const Login = () => {
         <h1 className='text-4x1 text-stone-600 font-bold text-center mb-6'>Login</h1>
         <form action="" onSubmit={handleSubmit}>
         
-        {/* email */}
+        {/* username */}
         <div className=' relative my-4' >
         <input 
-        // type="text" 
+        type='text'
         className=' block w-72 py-2.3 px-0 text-sm text-primary bg-transparent border-0 border-b-2 border-x-gray-300 appearance-none dark:focus:border-stone-500 focus:outline-none focus:ring-0 focus:text-primary focus:border-stone-500 peer' 
         placeholder='' 
-        id='email'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        id='username'
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         required
         />
-        <label htmlFor="email" >Your Email</label>
+        <label htmlFor="username" >Your Username</label>
         </div>
 
         {/* password */}

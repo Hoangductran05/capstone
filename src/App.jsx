@@ -16,6 +16,7 @@ import Sidebar from './components/sidebar'
 
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem('userToken') ?? null)
   
 
   return (
@@ -27,8 +28,8 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/product/:id' element={<Detail />} />
             <Route path='/cart' element={<Cart />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login token={token} setToken={setToken} />} />
+            <Route path='/register' element={<Register token={token} setToken={setToken} />} />
           </Routes>
           <Sidebar />
           <Footer />
