@@ -8,7 +8,7 @@ import Cart from './pages/cart'
 import Checkout from './pages/checkout'
 import Detail from './pages/detail'
 import Login from './pages/login'
-import Signup from './pages/signup'
+import Register from './pages/register'
 // components
 import Header from './components/header'
 import Footer from './components/footer'

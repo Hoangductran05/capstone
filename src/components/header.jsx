@@ -25,6 +25,7 @@ const Header = () => {
           <img className='w-[40px]' src={Logo} alt="" />
         </div>
       </Link>
+      
       {/* cart */}
       <div onClick={() => setIsOpen(!isOpen)} className='cursor-pointer flex relative'>
         <BsBag className='text-2xl'/>
