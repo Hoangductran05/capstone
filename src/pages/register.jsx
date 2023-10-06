@@ -9,6 +9,7 @@ const Register = () => {
       <div className=' bg-stone-800 border border-stone-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-20 relative '>
         <h1 className='text-4x1 text-stone-600 font-bold text-center mb-6'>Register</h1>
         <form action="">
+          
         <div className=' relative my-4' >
         <input type="text" className=' block w-72 py-2.3 px-0 text-sm text-primary bg-transparent border-0 border-b-2 border-x-gray-300 appearance-none dark:focus:border-stone-500 focus:outline-none focus:ring-0 focus:text-primary focus:border-stone-500 peer' placeholder='' />
         <label htmlFor="name" >Your Name</label>
