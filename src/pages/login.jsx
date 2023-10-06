@@ -9,17 +9,29 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password == '') {
-      setError('Please enter correct details!');
-    } else {
       // TODO: Send signup request to server
-      setError('Login successful');
-      setEmail('');
-      setPassword('');
+      try {
+        const response = await fetch('https://fakestoreapi.com/auth/login', {
+          method:'POST',
+          body:JSON.stringify({
+              username: "mor_2314",
+              password: "83r5^_",
+          })
+      })
+      const result  = await response.json()
+      console.log(result)
+          
+      } catch (error) {
+        setError(error.message);
+      }
+
+      
+      // setEmail('');
+      // setPassword('');
     }
-  };
+  
   return (
     <div className=' text-stone-500 h-[100vh] flex justify-center items-center'>
       <div className=' bg-stone-800 border border-stone-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-20 relative '>
@@ -29,9 +41,10 @@ const Login = () => {
         {/* email */}
         <div className=' relative my-4' >
         <input 
-        type="email" 
+        // type="text" 
         className=' block w-72 py-2.3 px-0 text-sm text-primary bg-transparent border-0 border-b-2 border-x-gray-300 appearance-none dark:focus:border-stone-500 focus:outline-none focus:ring-0 focus:text-primary focus:border-stone-500 peer' 
         placeholder='' 
+        id='email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
@@ -45,6 +58,7 @@ const Login = () => {
         type="password" 
         className=' block w-72 py-2.3 px-0 text-sm text-primary bg-transparent border-0 border-b-2 border-x-gray-300 appearance-none dark:focus:border-stone-500 focus:outline-none focus:ring-0 focus:text-primary focus:border-stone-500 peer' 
         placeholder='' 
+        id='password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
