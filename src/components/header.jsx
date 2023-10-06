@@ -5,6 +5,9 @@ import { Cartcontext } from '../contexts/cartContext'
 import {BsBag} from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import Logo from '../img/Untitled-1.png'
+import Login from '../pages/login'
+import { FaUserAlt } from 'react-icons/fa'
+
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false)
@@ -25,7 +28,12 @@ const Header = () => {
           <img className='w-[40px]' src={Logo} alt="" />
         </div>
       </Link>
-      
+
+      {/* login register */}
+      <Link to={'/login'}>
+      <div className='cursor-pointer flex relative'><FaUserAlt className=' text-2xl'/></div>
+      </Link>
+
       {/* cart */}
       <div onClick={() => setIsOpen(!isOpen)} className='cursor-pointer flex relative'>
         <BsBag className='text-2xl'/>

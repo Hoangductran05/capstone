@@ -9,6 +9,7 @@ import { SidebarContext } from '../contexts/sidebarContext'
 import { Cartcontext } from '../contexts/cartContext'
 
 
+
 const Sidebar = () => {
   const {isOpen, handleClose} = useContext(SidebarContext)
   const {cart, clearCart, total, itemAmount} = useContext(Cartcontext)
