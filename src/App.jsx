@@ -28,6 +28,7 @@ function App() {
             <Route path='/product/:id' element={<Detail />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
           </Routes>
           <Sidebar />
           <Footer />
