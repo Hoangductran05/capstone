@@ -31,11 +31,11 @@ const Header = () => {
 
       {/* login register */}
       <Link to={'/login'}>
-      <div className='cursor-pointer flex relative'><FaUserAlt className=' text-2xl'/></div>
+      <div className='cursor-pointer flex relative hover:text-stone-600'><FaUserAlt className=' text-2xl'/></div>
       </Link>
 
       {/* cart */}
-      <div onClick={() => setIsOpen(!isOpen)} className='cursor-pointer flex relative'>
+      <div onClick={() => setIsOpen(!isOpen)} className='cursor-pointer flex relative hover:text-stone-600'>
         <BsBag className='text-2xl'/>
         <div className='bg-neutral-400 absolute -right-2 -bottom-2 text-[12px] w-[18px] h-[18px] text-white rounded-full flex justify-center items-center'>
           {itemAmount}</div>
