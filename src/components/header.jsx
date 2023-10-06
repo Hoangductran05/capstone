@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import Logo from '../img/Untitled-1.png'
 import Login from '../pages/login'
 import { FaUserAlt } from 'react-icons/fa'
-
+import {TbLogout} from 'react-icons/tb'
 
 const Header = ({setToken}) => {
   const [isActive, setIsActive] = useState(false)
@@ -53,8 +53,8 @@ const Header = ({setToken}) => {
       {/* logout */}
       <div>
           <button
-          className=' w-[80px] mb-4 text-[18px] mt-6 rounded-md   bg-neutral-400 text-neutral-600 hover:bg-neutral-200 hover:text-stone-700 py-2 font-bold'
-          onClick={handleLogout}>Logout</button>
+          className='cursor-pointer flex relative hover:text-stone-600'
+          onClick={handleLogout}><TbLogout className=' text-2xl'/></button>
         </div>
       
 
