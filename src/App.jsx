@@ -13,6 +13,7 @@ import Register from './pages/register'
 import Header from './components/header'
 import Footer from './components/footer'
 import Sidebar from './components/sidebar'
+import Login2 from './components/Login2'
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/product/:id' element={<Detail />} />
             <Route path='/cart' element={<Cart />} />
-            <Route path='/login' element={<Login token={token} setToken={setToken} />} />
+            <Route path='/login' element={<Login2 token={token} setToken={setToken} />} />
             <Route path='/register' element={<Register token={token} setToken={setToken} />} />
           </Routes>
           <Sidebar />
