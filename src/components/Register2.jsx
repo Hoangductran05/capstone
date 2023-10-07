@@ -1,28 +1,27 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase'
 
-const Login2 = () => {
+const Register2 = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        signInWithEmailAndPassword(auth, email, password)
+        createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             console.log(userCredential)
         }).catch((error) => {
             console.log(error)
-            setError(error.userCredential)
         })
     }
 
   return (
     <div className=' text-stone-500 h-[100vh] flex justify-center items-center'>
       <div className=' bg-stone-800 border border-stone-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-20 relative '>
-        <h1 className='text-4x1 text-stone-600 font-bold text-center mb-6'>Login</h1>
+        <h1 className='text-4x1 text-stone-600 font-bold text-center mb-6'>Register</h1>
         <form  onSubmit={handleSubmit}>
         
         {/* username */}
@@ -59,11 +58,11 @@ const Login2 = () => {
         {/* button */}
         <button 
         className='w-full mb-4 text-[18px] mt-6 rounded-full bg-neutral-400 text-neutral-600 hover:bg-neutral-200 hover:text-stone-700 py-2' 
-        type='submit'>Login
+        type='submit'>Register
         </button>
 
         <div>
-          <span>New Here? <Link className=' text-stone-500 hover:text-stone-900' to={'/register'}>Create An Account</Link></span>
+          <span>Already have an account? <Link className=' text-stone-500 hover:text-stone-900' to={'/login'}>Login</Link></span>
         </div>
         </form>
         
@@ -73,4 +72,4 @@ const Login2 = () => {
   )
 }
 
-export default Login2
+export default Register2
