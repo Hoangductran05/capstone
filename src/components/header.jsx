@@ -9,6 +9,7 @@ import Logo from '../img/Untitled-1.png'
 import Login from '../pages/login'
 import { FaUserAlt } from 'react-icons/fa'
 import {TbLogout} from 'react-icons/tb'
+import AuthDetail from './AuthDetail'
 
 const Header = ({setToken}) => {
   const [isActive, setIsActive] = useState(false)
@@ -52,9 +53,7 @@ const Header = ({setToken}) => {
 
       {/* logout */}
       <div>
-          <button
-          className='cursor-pointer flex relative hover:text-stone-600'
-          onClick={handleLogout}><TbLogout className=' text-2xl'/></button>
+          <AuthDetail />
         </div>
       
 
