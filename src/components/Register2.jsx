@@ -30,7 +30,7 @@ const Register2 = () => {
         <input 
         type='email'
         className=' block w-72 py-2.3 px-0 text-sm text-primary bg-transparent border-0 border-b-2 border-x-gray-300 appearance-none dark:focus:border-stone-500 focus:outline-none focus:ring-0 focus:text-primary focus:border-stone-500 peer' 
-        placeholder='' 
+        placeholder='youremail@gmail.com' 
         id='email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -44,7 +44,7 @@ const Register2 = () => {
         <input 
         type="password" 
         className=' block w-72 py-2.3 px-0 text-sm text-primary bg-transparent border-0 border-b-2 border-x-gray-300 appearance-none dark:focus:border-stone-500 focus:outline-none focus:ring-0 focus:text-primary focus:border-stone-500 peer' 
-        placeholder='' 
+        placeholder='6 or more character' 
         id='password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
