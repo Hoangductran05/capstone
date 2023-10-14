@@ -16,7 +16,7 @@ const Login2 = () => {
             console.log(userCredential)
         }).catch((error) => {
             console.log(error)
-            setError(error.userCredential)
+            setError(error.message)
         })
     }
 
@@ -62,7 +62,7 @@ const Login2 = () => {
         </button>
 
         {/* error message */}
-        {error && (<div className="alert alert-danger">{error}</div>)}
+        {error && (<div className="alert alert-danger text-red-700">{error}</div>)}
 
         <div>
           <span>New Here? <Link className=' text-stone-500 hover:text-stone-900' to={'/register'}>Create An Account</Link></span>

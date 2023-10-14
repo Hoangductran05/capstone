@@ -15,7 +15,8 @@ const Register2 = () => {
         .then((userCredential) => {
             console.log(userCredential)
         }).catch((error) => {
-            console.log(error)
+            console.log(error.message)
+            setError(error.message)
         })
     }
 
@@ -61,7 +62,7 @@ const Register2 = () => {
         </button>
 
         {/* error message */}
-        {error && (<div className="alert alert-danger">{error}</div>)}
+        {error && (<div className="alert alert-danger text-red-700">{error}</div>)}
 
         <div>
           <span>Already have an account? <Link className=' text-stone-500 hover:text-stone-900' to={'/login'}>Login</Link></span>
