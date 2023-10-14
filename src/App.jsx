@@ -13,7 +13,7 @@ import Register from './pages/register'
 import Header from './components/header'
 import Footer from './components/footer'
 import Sidebar from './components/sidebar'
-import Login2 from './components/Login2'
+import Login2 from './components/LoginFireBase'
 import Register2 from './components/Register2'
 import AuthDetail from './components/AuthDetail'
 
