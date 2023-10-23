@@ -19,7 +19,7 @@ import AuthDetail from './components/AuthDetail'
 
 
 function App() {
-  // const [token, setToken] = useState(localStorage.getItem('userToken') ?? null)
+  
   
 
   return (
@@ -34,6 +34,7 @@ function App() {
             <Route path='/login' element={<Login2  />} />
             <Route path='/register' element={<Register2  />} />
             <Route path='/login' element={<AuthDetail/>}/>
+            <Route path='/checkout' element={<Checkout/>}/>
           </Routes>
           <Sidebar />
           <Footer />
