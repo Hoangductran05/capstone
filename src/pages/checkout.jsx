@@ -1,9 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react"
 import React from 'react'
+import { Firestore } from "firebase/firestore";
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { createStripeCustomer } from "../firebase";
 
 const Checkout = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '', phone: '', address: '', city: ''});
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const stripe = useStripe()
+  const elements = useElements()
 
   const handleChange = (e) => {
      setForm({ ...form, [e.target.name]: e.target.value });
@@ -12,6 +19,54 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
      e.preventDefault();
      // submission logic here
+     setLoading(true)
+     setError(null)
+
+     if (!stripe || !elements) {
+      setError("Please reload the page and try again.")
+      return;
+     }
+
+     const cardElement = elements.getElement(CardElement)
+
+     if (!cardElement) {
+      setError("Please enter your payment details")
+      return;
+     }
+
+     const {error, paymentMethod} = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+     })
+
+     if (error) {
+      setError(error.message)
+      return;
+     }
+     try {
+      const { data } = await createStripeCustomer({ email: form.email });
+      const customerId = data.customerId;
+
+      // Create the charge on Stripe's servers - this will charge the user's card
+      await stripe.confirmCardPayment(paymentMethod.id, {
+          payment_method: paymentMethod.id,
+          amount: 1000, // 10 USD
+          currency: "usd",
+      });
+
+      // Save the customer ID to Firestore
+      await Firestore.collection("customers").add({ customerId });
+
+      // Clear the form and show a success message
+      setForm({ name: '', email: '', password: '', phone: '', address: '', city: '' });
+      setError(null);
+      setLoading(false);
+  } catch (error) {
+      setError(error.message);
+      setLoading(false);
+  }
+
+
   };
   return (
     <div className=' text-stone-500 h-[100vh] flex justify-center items-center'> 
