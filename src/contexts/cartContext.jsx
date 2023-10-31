@@ -5,6 +5,7 @@ import { useFetcher } from 'react-router-dom'
 import { auth } from '../firebase'
 import { db } from '../firebase'
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 
@@ -40,7 +41,21 @@ const CartProvider = ({children}) => {
         setCart([]);
       }
     };
-  
+    
+     // Listen for user authentication state changes
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // User has logged out, clear the cart
+      setCart([]);
+    }
+  });
+
+  // Unsubscribe the listener when the component unmounts
+  return () => {
+    unsubscribe();
+  };
+
+    // eslint-disable-next-line no-unreachable
     initializeUserCart();
   }, []);
   
