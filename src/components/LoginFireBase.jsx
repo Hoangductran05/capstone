@@ -3,28 +3,45 @@ import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../firebase'
 
 const Login2 = (props) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log(userCredential)
-        }).catch((error) => {
-            console.log(error)
-            setError(error.message)
-        })
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential);
+
+      // After successful login, fetch the user's cart data from Firestore
+      const user = userCredential.user;
+      const userCartRef = doc(db, 'carts', user.uid);
+      const cartSnapshot = await getDoc(userCartRef);
+
+      if (cartSnapshot.exists()) {
+        const userCart = cartSnapshot.data().cart;
+        console.log('User Cart:', userCart);
+
+        
+      } else {
+        // User has no cart data in Firestore
+        console.log('empty cart')
+      }
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
     }
+  };
 
   return (
     <div className=' text-stone-500 h-[100vh] flex justify-center items-center'>
       <div className=' bg-stone-800 border border-stone-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-20 relative '>
         <h1 className='text-4x1 text-stone-600 font-bold text-center mb-6'>Login</h1>
-        <form  onSubmit={handleSubmit}>
+        <form  onSubmit={handleLogin}>
         
         {/* username */}
         <div className=' relative my-4' >
