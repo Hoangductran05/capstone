@@ -5,6 +5,9 @@ import { getAnalytics } from "firebase/analytics";
 import {getAuth} from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 import * as functions from 'firebase/functions'
+import firebase from "firebase/compat/app";
+// Required for side-effects
+import "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -25,6 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app)
+
 const createStripeCustomer = functions.httpsCallable("createStripeCustomer")
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);

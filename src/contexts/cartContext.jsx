@@ -2,6 +2,12 @@
 /* eslint-disable no-unused-vars */
 import React, {useContext, useState, useEffect, createContext} from 'react'
 import { useFetcher } from 'react-router-dom'
+import 'firebase/firestore'
+import { auth } from '../firebase'
+import { db } from '../firebase'
+import firebase from "firebase/compat/app";
+// Required for side-effects
+import "firebase/firestore";
 
 
 export const Cartcontext = createContext()
@@ -11,7 +17,27 @@ const CartProvider = ({children}) => {
   const [itemAmount, setItemAmount] = useState(0)
   const [total, setTotal] = useState(0)
 
-  
+  // Initialize the user's cart based on authentication status
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, retrieve their cart from Firestore
+        const userCartRef = firebase.firestore().collection('carts').doc(user.uid);
+
+        userCartRef.get().then((doc) => {
+          if (doc.exists) {
+            setCart(doc.data().cart);
+          } else {
+            // User has no cart data, set an empty cart
+            setCart([]);
+          }
+        });
+      } else {
+        // User is not signed in, set an empty cart
+        setCart([]);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const total = cart.reduce((accumulator, currentItem) => {
@@ -49,7 +75,12 @@ const CartProvider = ({children}) => {
     } else {
       setCart([...cart, newItem])
     }
-    
+     // Update the cart data in Firestore
+  const user = auth.currentUser;
+  if (user) {
+    const userCartRef = firebase.firestore().collection('carts').doc(user.uid);
+    userCartRef.set({ cart }, { merge: true });
+  }
   }
 
   //remove cart
