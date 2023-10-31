@@ -20,9 +20,11 @@ const CartProvider = ({children}) => {
   useEffect(() => {
     const initializeUserCart = async () => {
       const user = auth.currentUser;
+      console.log(user)
   
       if (user) {
         const userCartRef = doc(db, 'carts', user.uid);
+        console.log(userCartRef)
   
         try {
           const cartSnapshot = await getDoc(userCartRef);
@@ -106,42 +108,75 @@ const CartProvider = ({children}) => {
       return item.id !== id
     })
     setCart(newCart)
-    
+        // Update the cart data in Firestore
+        const user = auth.currentUser;
+        if (user) {
+          const userCartRef = doc(db, 'carts', user.uid);
+          setDoc(userCartRef, { cart: newCart }, { merge: true });
+        }
   }
   
   //clear cart
   const clearCart = () => {
     setCart([])
-    
+  // Update the cart data in Firestore
+  const user = auth.currentUser;
+  if (user) {
+    const userCartRef = doc(db, 'carts', user.uid);
+    setDoc(userCartRef, { cart: [] }, { merge: true });
   }
-
+  }
   //increase cart
   const increaseAmount = (id) => {
-    const cartItem = cart.find((item) => item.id  === id)
-    addToCart(cartItem, id)
-    
-  }
+    const cartItem = cart.find((item) => item.id === id);
+    if (cartItem) {
+      // Increase the item's amount
+      cartItem.amount += 1;
+      setCart([...cart]); // Update the local cart state
+  
+      // Update the cart data in Firestore
+      const user = auth.currentUser;
+      if (user) {
+        const userCartRef = doc(db, 'carts', user.uid);
+        setDoc(userCartRef, { cart: [...cart] }, { merge: true });
+      }
+    }
+  };
+  
 
   //decrease cart
   const decreaseAmount = (id) => {
-    const cartItem = cart.find((item) => {
-      return item.id === id
-    })
-    if(cartItem) {
-      const newCart = cart.map((item) => {
-        if (item.id === id) {
-          return {...item, amount: cartItem.amount -1}
-        } else {
-          return item
-        }
-      })
-      setCart(newCart)
-    } 
-      if (cartItem.amount < 2) {
-        removeFromCart(id)
+    const cartItem = cart.find((item) => item.id === id);
+    if (cartItem) {
+      let updatedCart = [...cart];
+  
+      if (cartItem.amount > 1) {
+        // Decrease the item's amount
+        updatedCart = updatedCart.map((item) => {
+          if (item.id === id) {
+            return { ...item, amount: cartItem.amount - 1 };
+          } else {
+            return item;
+          }
+        });
+      } else {
+        // If the item's amount is 1 or less, remove it from the cart
+        removeFromCart(id);
+        return;
       }
-    
-  }
+  
+      // Update the local cart state
+      setCart(updatedCart);
+  
+      // Update the cart data in Firestore
+      const user = auth.currentUser;
+      if (user) {
+        const userCartRef = doc(db, 'carts', user.uid);
+        setDoc(userCartRef, { cart: updatedCart }, { merge: true });
+      }
+    }
+  };
+  
 
   return <Cartcontext.Provider value={{cart, addToCart, removeFromCart, clearCart,  increaseAmount, decreaseAmount, itemAmount,total, }}>
     {children}</Cartcontext.Provider>
