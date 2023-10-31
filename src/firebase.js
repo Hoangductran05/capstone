@@ -1,13 +1,10 @@
 /* eslint-disable no-unused-vars */
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import {getAuth} from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
-import * as functions from 'firebase/functions'
-import firebase from "firebase/compat/app";
-// Required for side-effects
-import "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getAnalytics } from 'firebase/analytics';
+import { httpsCallable } from 'firebase/functions';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -25,11 +22,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-export const db = getFirestore(app)
+const db = getFirestore(app);
+const createStripeCustomer = httpsCallable(app, 'createStripeCustomer');
 
-const createStripeCustomer = functions.httpsCallable("createStripeCustomer")
-// Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app);
-export {createStripeCustomer}
+// Initialize Firebase Authentication
+const auth = getAuth(app);
+
+export { db, auth, createStripeCustomer };

@@ -2,12 +2,10 @@
 /* eslint-disable no-unused-vars */
 import React, {useContext, useState, useEffect, createContext} from 'react'
 import { useFetcher } from 'react-router-dom'
-import 'firebase/firestore'
 import { auth } from '../firebase'
 import { db } from '../firebase'
-import firebase from "firebase/compat/app";
-// Required for side-effects
-import "firebase/firestore";
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+
 
 
 export const Cartcontext = createContext()
@@ -17,27 +15,35 @@ const CartProvider = ({children}) => {
   const [itemAmount, setItemAmount] = useState(0)
   const [total, setTotal] = useState(0)
 
-  // Initialize the user's cart based on authentication status
+  //read the cart when user signin
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    const initializeUserCart = async () => {
+      const user = auth.currentUser;
+  
       if (user) {
-        // User is signed in, retrieve their cart from Firestore
-        const userCartRef = firebase.firestore().collection('carts').doc(user.uid);
-
-        userCartRef.get().then((doc) => {
-          if (doc.exists) {
-            setCart(doc.data().cart);
+        const userCartRef = doc(db, 'carts', user.uid);
+  
+        try {
+          const cartSnapshot = await getDoc(userCartRef);
+  
+          if (cartSnapshot.exists()) {
+            setCart(cartSnapshot.data().cart);
           } else {
             // User has no cart data, set an empty cart
             setCart([]);
           }
-        });
+        } catch (error) {
+          console.error('Error fetching user cart:', error);
+        }
       } else {
         // User is not signed in, set an empty cart
         setCart([]);
       }
-    });
+    };
+  
+    initializeUserCart();
   }, []);
+  
 
   useEffect(() => {
     const total = cart.reduce((accumulator, currentItem) => {
@@ -57,31 +63,27 @@ const CartProvider = ({children}) => {
   }, [cart])
 
   const addToCart = (product, id) => {
-    const newItem = {...product, amount: 1}
-    // check if the item is already in the cart
-    const cartItem = cart.find((item) => {
-      return item.id === id
-    })
-    
-    if (cartItem) {
-      const newCart = [...cart].map((item) => {
-        if (item.id === id) {
-          return  {...item, amount: cartItem.amount + 1}
-        } else {
-          return item;
-        }
-      })
-      setCart(newCart)
+    const newItem = { ...product, amount: 1 };
+    const cartItemIndex = cart.findIndex((item) => item.id === id);
+  
+    if (cartItemIndex !== -1) {
+      // Item already exists in the cart, increase its amount
+      const updatedCart = [...cart];
+      updatedCart[cartItemIndex].amount += 1;
+      setCart(updatedCart);
     } else {
-      setCart([...cart, newItem])
+      // Item does not exist in the cart, add it
+      setCart([...cart, newItem]);
     }
-     // Update the cart data in Firestore
-  const user = auth.currentUser;
-  if (user) {
-    const userCartRef = firebase.firestore().collection('carts').doc(user.uid);
-    userCartRef.set({ cart }, { merge: true });
-  }
-  }
+  
+    // Update the cart data in Firestore
+    const user = auth.currentUser;
+    if (user) {
+      const userCartRef = doc(db, 'carts', user.uid);
+      setDoc(userCartRef, { cart: [...cart, newItem] }, { merge: true });
+    }
+  };
+  
 
   //remove cart
   const removeFromCart = (id) => {
@@ -89,7 +91,7 @@ const CartProvider = ({children}) => {
       return item.id !== id
     })
     setCart(newCart)
-   
+    
   }
   
   //clear cart
