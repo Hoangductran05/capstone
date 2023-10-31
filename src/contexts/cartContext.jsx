@@ -3,12 +3,15 @@
 import React, {useContext, useState, useEffect, createContext} from 'react'
 import { useFetcher } from 'react-router-dom'
 
+
 export const Cartcontext = createContext()
 
 const CartProvider = ({children}) => {
   const [cart, setCart] = useState([])
   const [itemAmount, setItemAmount] = useState(0)
   const [total, setTotal] = useState(0)
+
+  
 
   useEffect(() => {
     const total = cart.reduce((accumulator, currentItem) => {
@@ -46,6 +49,7 @@ const CartProvider = ({children}) => {
     } else {
       setCart([...cart, newItem])
     }
+    
   }
 
   //remove cart
@@ -54,17 +58,20 @@ const CartProvider = ({children}) => {
       return item.id !== id
     })
     setCart(newCart)
+   
   }
   
   //clear cart
   const clearCart = () => {
     setCart([])
+    
   }
 
   //increase cart
   const increaseAmount = (id) => {
     const cartItem = cart.find((item) => item.id  === id)
     addToCart(cartItem, id)
+    
   }
 
   //decrease cart

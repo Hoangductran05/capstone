@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase'
 
-const Login2 = () => {
+const Login2 = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
