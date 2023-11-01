@@ -8,7 +8,8 @@ import ProductProvider from './contexts/productContext.jsx'
 import SidebarProvider from './contexts/sidebarContext.jsx'
 import CartProvider from './contexts/cartContext.jsx'
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPEAPI)
+const apikey = import.meta.env.VITE_STRIPEAPI
+const stripePromise = loadStripe(apikey)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <SidebarProvider>

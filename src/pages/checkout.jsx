@@ -121,10 +121,13 @@ const Checkout = () => {
         required
       />
       </div>
+      <div className=" relative my-4">
+      <CardElement />
+      </div>
 
       {/* button */}
       <div className=" relative my-4">
-      <CardElement />
+      
       <button type="submit" disabled={!stripe}
         className='w-full mb-4 text-[18px] mt-6 rounded-full bg-neutral-400 text-neutral-600 hover:bg-neutral-200 hover:text-stone-700 py-2'
       >
