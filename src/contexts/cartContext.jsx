@@ -15,35 +15,36 @@ const CartProvider = ({children}) => {
   const [cart, setCart] = useState([])
   const [itemAmount, setItemAmount] = useState(0)
   const [total, setTotal] = useState(0)
-
+  const user = auth.currentUser;
   //read the cart when user signin
   useEffect(() => {
-    const initializeUserCart = async () => {
-      const user = auth.currentUser;
-      console.log(user)
+    // const initializeUserCart = async () => {
+      
+    //   console.log(user)
   
-      if (user) {
-        const userCartRef = doc(db, 'carts', user.uid);
-        console.log(userCartRef)
+    //   if (user) {
+    //     const userCartRef = doc(db, 'carts', user.uid);
+    //     console.log(userCartRef)
   
-        try {
-          const cartSnapshot = await getDoc(userCartRef);
+    //     try {
+    //       const cartSnapshot = await getDoc(userCartRef);
   
-          if (cartSnapshot.exists()) {
-            setCart(cartSnapshot.data().cart);
-          } else {
-            // User has no cart data, set an empty cart
-            setCart([]);
-          }
-        } catch (error) {
-          console.error('Error fetching user cart:', error);
-        }
-      } else {
-        // User is not signed in, set an empty cart
-        setCart([]);
-      }
-    };
-    
+    //       if (cartSnapshot.exists()) {
+    //         setCart(cartSnapshot.data().cart);
+    //       } else {
+    //         // User has no cart data, set an empty cart
+    //         setCart([]);
+    //       }
+    //     } catch (error) {
+    //       console.error('Error fetching user cart:', error);
+    //     }
+    //   } else {
+    //     // User is not signed in, set an empty cart
+    //     setCart([]);
+    //   }
+    // };
+    // initializeUserCart();
+
      // Listen for user authentication state changes
   const unsubscribe = onAuthStateChanged(auth, (user) => {
     if (!user) {
@@ -58,8 +59,8 @@ const CartProvider = ({children}) => {
   };
 
     // eslint-disable-next-line no-unreachable
-    initializeUserCart();
-  }, []);
+   
+  }, [user]);
   
 
   useEffect(() => {
@@ -178,7 +179,7 @@ const CartProvider = ({children}) => {
   };
   
 
-  return <Cartcontext.Provider value={{cart, addToCart, removeFromCart, clearCart,  increaseAmount, decreaseAmount, itemAmount,total, }}>
+  return <Cartcontext.Provider value={{cart, setCart, addToCart, removeFromCart, clearCart,  increaseAmount, decreaseAmount, itemAmount,total, }}>
     {children}</Cartcontext.Provider>
 }
 

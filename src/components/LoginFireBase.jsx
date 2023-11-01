@@ -1,12 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { Link } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import { Cartcontext } from '../contexts/cartContext'
+
 
 const Login2 = (props) => {
+  const {cart, setCart} = useContext(Cartcontext)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -24,11 +27,13 @@ const Login2 = (props) => {
 
       if (cartSnapshot.exists()) {
         const userCart = cartSnapshot.data().cart;
+        setCart(userCart)
         console.log('User Cart:', userCart);
 
         
       } else {
         // User has no cart data in Firestore
+        setCart([])
         console.log('empty cart')
       }
     } catch (error) {
